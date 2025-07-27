@@ -1,0 +1,14 @@
+# Google OAuth Configuration
+# Get these from https://console.cloud.google.com/
+# 1. Create a new project or select existing project
+# 2. Enable Google+ API
+# 3. Go to Credentials → Create Credentials → OAuth 2.0 Client IDs
+# 4. Set Application type to "Web application"
+# 5. Add authorized redirect URIs: http://localhost:3001/api/auth/callback/google
+GOOGLE_CLIENT_ID=your_google_client_id_here
+GOOGLE_CLIENT_SECRET=your_google_client_secret_here
+
+# NextAuth Configuration  
+# Generate a secret: openssl rand -base64 32
+NEXTAUTH_SECRET=your_nextauth_secret_here
+NEXTAUTH_URL=http://localhost:3001
