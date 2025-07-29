@@ -8,6 +8,7 @@ export { EmptyState } from "./ui/EmptyState";
 export { ActivityCard } from "./activity/ActivityCard";
 export { ActivityList } from "./activity/ActivityList";
 export { ActivityDetail } from "./activity/ActivityDetail";
+export { ActivityMap } from "./activity/ActivityMap";
 
 // Dashboard Components
 export { Header } from "./dashboard/Header";
