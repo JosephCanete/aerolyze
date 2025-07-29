@@ -84,7 +84,9 @@ export function ActivityMap({ activity }: ActivityMapProps) {
   };
 
   // State for decoded coordinates
-  const [routeCoordinates, setRouteCoordinates] = useState<[number, number][]>([]);
+  const [routeCoordinates, setRouteCoordinates] = useState<[number, number][]>(
+    []
+  );
 
   // Decode polyline on component mount
   useEffect(() => {

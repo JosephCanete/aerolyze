@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { ActivityMap } from "./ActivityMap";
 import {
@@ -23,7 +23,7 @@ interface ActivityDetailProps {
 export function ActivityDetail({ activity, photos }: ActivityDetailProps) {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
+
   const hasPerformanceData =
     activity.average_speed > 0 ||
     activity.average_heartrate > 0 ||
@@ -43,50 +43,50 @@ export function ActivityDetail({ activity, photos }: ActivityDetailProps) {
     setIsGalleryOpen(false);
   };
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => 
+  const nextImage = useCallback(() => {
+    setCurrentImageIndex((prev) =>
       prev === validPhotos.length - 1 ? 0 : prev + 1
     );
-  };
+  }, [validPhotos.length]);
 
-  const previousImage = () => {
-    setCurrentImageIndex((prev) => 
+  const previousImage = useCallback(() => {
+    setCurrentImageIndex((prev) =>
       prev === 0 ? validPhotos.length - 1 : prev - 1
     );
-  };
+  }, [validPhotos.length]);
 
   // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isGalleryOpen) return;
-      
+
       switch (e.key) {
-        case 'Escape':
+        case "Escape":
           closeGallery();
           break;
-        case 'ArrowLeft':
+        case "ArrowLeft":
           previousImage();
           break;
-        case 'ArrowRight':
+        case "ArrowRight":
           nextImage();
           break;
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isGalleryOpen, nextImage, previousImage]);
 
   // Prevent body scroll when gallery is open
   useEffect(() => {
     if (isGalleryOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
-    
+
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isGalleryOpen]);
 
@@ -161,7 +161,7 @@ export function ActivityDetail({ activity, photos }: ActivityDetailProps) {
 
       {/* Custom Photo Gallery Modal */}
       {isGalleryOpen && validPhotos.length > 0 && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
           onClick={closeGallery}
         >
@@ -170,8 +170,18 @@ export function ActivityDetail({ activity, photos }: ActivityDetailProps) {
             onClick={closeGallery}
             className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
           >
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
 
@@ -189,8 +199,18 @@ export function ActivityDetail({ activity, photos }: ActivityDetailProps) {
               }}
               className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
             >
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                className="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
             </button>
           )}
@@ -204,14 +224,24 @@ export function ActivityDetail({ activity, photos }: ActivityDetailProps) {
               }}
               className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
             >
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <svg
+                className="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </button>
           )}
 
           {/* Main image */}
-          <div 
+          <div
             className="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
@@ -236,7 +266,9 @@ export function ActivityDetail({ activity, photos }: ActivityDetailProps) {
                     setCurrentImageIndex(index);
                   }}
                   className={`relative w-16 h-16 rounded-md overflow-hidden flex-shrink-0 transition-opacity ${
-                    index === currentImageIndex ? 'ring-2 ring-white opacity-100' : 'opacity-60 hover:opacity-80'
+                    index === currentImageIndex
+                      ? "ring-2 ring-white opacity-100"
+                      : "opacity-60 hover:opacity-80"
                   }`}
                 >
                   <Image

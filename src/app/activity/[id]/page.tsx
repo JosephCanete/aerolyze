@@ -40,9 +40,7 @@ export default function ActivityPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <LoadingState loading={loading} error={error}>
-        {activity && <ActivityDetail activity={activity} photos={photos} />}
-      </LoadingState>
+      {activity && <ActivityDetail activity={activity} photos={photos} />}
     </div>
   );
 }
